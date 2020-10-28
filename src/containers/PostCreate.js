@@ -1,12 +1,12 @@
 import React, {useRef, useState } from 'react'
 import { Header, Button, Form } from 'semantic-ui-react'
-import axios from "axios";
 import MarkdownIt from 'markdown-it'
 import MdEditor from 'react-markdown-editor-lite'
 import 'react-markdown-editor-lite/lib/index.css';
 import { history } from "../helpers";
 import Message from '../components/Message';
 import { api } from '../api';
+import { authAxios } from "../services"
 
 const PostCreate = () => {
     const [error, setError] = useState(null)
@@ -28,11 +28,10 @@ const PostCreate = () => {
         formData.append("thumbnail", thumbnail)
         formData.append("title", title)
         formData.append("content", markdown)
-        axios
+        authAxios
             .post(api.posts.create, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
-                    "Authorization": "Token 7023702e4709c5490f7c3c1b9b0c202626fbd5de"
                 }
             })
             .then(res => {
